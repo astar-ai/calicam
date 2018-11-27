@@ -46,7 +46,10 @@ For more information see
 ### 4. Operation
 
 #### 4.1 'Raw Image' window
-There are 3 trackbars to adjust the vertical FoV, width, and height for the output image.
+There are 3 trackbars to adjust the vertical **FoV**, **width**, and **height** for the output image.
 
 #### 4.2 'Disparity Image' window
-There are 2 trackbars to adjust the numDisparities and blockSize for [OpenCV stereo matching functions](https://docs.opencv.org/3.0-beta/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html#stereobm). 
+There are 2 trackbars to adjust the **numDisparities** and **blockSize** for [OpenCV stereo matching functions](https://docs.opencv.org/3.0-beta/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html#stereobm). 
+
+#### 4.3 Exit
+Press 'q' or 'Esc' key to exit.
