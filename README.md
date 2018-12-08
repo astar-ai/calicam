@@ -14,8 +14,8 @@ The following steps are tested and passed in Ubuntu 16.04.
 #### 1.2 OpenCV 3.4
 
 	cd
-	mkdir program
-	cd program
+	mkdir library
+	cd library
 
 	git clone https://github.com/opencv/opencv_contrib.git
 	cd opencv_contrib
