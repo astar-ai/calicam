@@ -75,9 +75,9 @@ void LoadParameters(std::string file_name) {
     exit(-1);
   }
 
-  cv::Size tmp_size;
+  cv::Size cap_size;
   fs["cam_model"] >> cam_model;
-  fs["Size"     ] >> tmp_size;
+  fs["cap_size" ] >> cap_size;
   fs["Kl"       ] >> Kl;
   fs["Dl"       ] >> Dl;
   fs["xil"      ] >> xil;
@@ -91,12 +91,12 @@ void LoadParameters(std::string file_name) {
   }
   fs.release();
 
-  img_width = tmp_size.width;
-  cap_cols  = tmp_size.width;
-  cap_rows  = tmp_size.height;
+  img_width = cap_size.width;
+  cap_cols  = cap_size.width;
+  cap_rows  = cap_size.height;
 
   if (cam_model == "Stereo")
-    cap_cols  = img_width * 2;
+    img_width  = cap_size.width / 2;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
