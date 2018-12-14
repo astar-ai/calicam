@@ -3,7 +3,7 @@
 For more information see
 [https://astar.ai](https://astar.ai).
 
-The following steps are tested and passed in Ubuntu 16.04.
+The following steps have been tested and passed on Ubuntu 16.04.
 
 ### 1. OpenCV Installation
 
