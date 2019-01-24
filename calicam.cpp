@@ -101,7 +101,7 @@ void LoadParameters(std::string file_name) {
 ////////////////////////////////////////////////////////////////////////////////
 
 void InitUndistortRectifyMap(cv::Mat K, cv::Mat D, cv::Mat xi, cv::Mat R, 
-                             cv::Mat P, Size size, 
+                             cv::Mat P, cv::Size size, 
                              cv::Mat& map1, cv::Mat& map2) {
   map1 = Mat(size, CV_32F);
   map2 = Mat(size, CV_32F);
