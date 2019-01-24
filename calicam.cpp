@@ -101,6 +101,59 @@ void LoadParameters(std::string file_name) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void InitUndistortRectifyMap(Mat K, Mat D, Mat xi, Mat R, Mat P,
+                             Size size, Mat& map1, Mat& map2) {
+  map1 = Mat(size, CV_32F);
+  map2 = Mat(size, CV_32F);
+
+  double fx = K.at<double>(0,0);
+  double fy = K.at<double>(1,1);
+  double cx = K.at<double>(0,2);
+  double cy = K.at<double>(1,2);
+  double s  = K.at<double>(0,1);
+
+  double xid = xi.at<double>(0,0);
+
+  double k1 = D.at<double>(0,0);
+  double k2 = D.at<double>(0,1);
+  double p1 = D.at<double>(0,2);
+  double p2 = D.at<double>(0,3);
+
+  Mat KRi = (P * R).inv();
+
+  for (int i = 0; i < size.height; ++i) {
+    double x = i * KRi.at<double>(0,1) + KRi.at<double>(0,2);
+    double y = i * KRi.at<double>(1,1) + KRi.at<double>(1,2);
+    double w = i * KRi.at<double>(2,1) + KRi.at<double>(2,2);
+    for (int j = 0; j < size.width; ++j, x += KRi.at<double>(0,0),
+                                         y += KRi.at<double>(1,0),
+                                         w += KRi.at<double>(2,0)) {
+      double r  = sqrt(x * x + y * y + w * w);
+      double xs = x / r;
+      double ys = y / r;
+      double zs = w / r;
+
+      double xu = xs / (zs + xid);
+      double yu = ys / (zs + xid);
+
+      double r2 = xu * xu + yu * yu;
+      double r4 = r2 * r2;
+      double xd = (1 + k1 * r2 + k2 * r4) * xu + 2 * p1 * xu * yu
+                                               + p2 * (r2 + 2 * xu * xu);
+      double yd = (1 + k1 * r2 + k2 * r4) * yu + 2 * p2 * xu * yu
+                                               + p1 * (r2 + 2 * yu * yu);
+
+      double u = fx * xd + s * yd + cx;
+      double v = fy * yd + cy;
+
+      map1.at<float>(i,j) = (float) u;
+      map2.at<float>(i,j) = (float) v;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void InitRectifyMap() {
   double vfov_rad = vfov_now * CV_PI / 180.;
   double focal = height_now / 2. / tan(vfov_rad / 2.);
@@ -109,11 +162,10 @@ void InitRectifyMap() {
                                  0., focal, height_now / 2. - 0.5,
                                  0., 0., 1.);
 
-  int flags = cv::omnidir::RECTIFY_PERSPECTIVE;
   cv::Size img_size(width_now, height_now);
 
-  cv::omnidir::initUndistortRectifyMap(Kl, Dl, xil, Rl, Knew, img_size,
-                                   CV_16SC2, smap[0][0], smap[0][1], flags);
+  InitUndistortRectifyMap(Kl, Dl, xil, Rl, Knew, 
+                          img_size, smap[0][0], smap[0][1]);
 
   std::cout << "Width: "  << width_now  << "\t"
             << "Height: " << height_now << "\t"
@@ -121,8 +173,8 @@ void InitRectifyMap() {
   std::cout << "K Matrix: \n" << Knew << std::endl;
 
   if (cam_model == "Stereo") {
-    cv::omnidir::initUndistortRectifyMap(Kr, Dr, xir, Rr, Knew, img_size,
-                                     CV_16SC2, smap[1][0], smap[1][1], flags);
+    InitUndistortRectifyMap(Kr, Dr, xir, Rr, Knew, 
+                            img_size, smap[1][0], smap[1][1]);
     std::cout << "Ndisp: " << ndisp_now << "\t"
               << "Wsize: " << wsize_now << "\n";
   }
