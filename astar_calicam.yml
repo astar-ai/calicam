@@ -1,6 +1,6 @@
 %YAML:1.0
 
-cam_model: Stereo
+cam_model: stereo
 Kl: !!opencv-matrix
    rows: 3
    cols: 3
