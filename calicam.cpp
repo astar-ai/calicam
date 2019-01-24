@@ -100,8 +100,9 @@ void LoadParameters(std::string file_name) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void InitUndistortRectifyMap(Mat K, Mat D, Mat xi, Mat R, Mat P,
-                             Size size, Mat& map1, Mat& map2) {
+void InitUndistortRectifyMap(cv::Mat K, cv::Mat D, cv::Mat xi, cv::Mat R, 
+                             cv::Mat P, Size size, 
+                             cv::Mat& map1, cv::Mat& map2) {
   map1 = Mat(size, CV_32F);
   map2 = Mat(size, CV_32F);
 
@@ -118,7 +119,7 @@ void InitUndistortRectifyMap(Mat K, Mat D, Mat xi, Mat R, Mat P,
   double p1 = D.at<double>(0,2);
   double p2 = D.at<double>(0,3);
 
-  Mat KRi = (P * R).inv();
+  cv::Mat KRi = (P * R).inv();
 
   for (int i = 0; i < size.height; ++i) {
     double x = i * KRi.at<double>(0,1) + KRi.at<double>(0,2);
