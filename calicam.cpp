@@ -80,7 +80,7 @@ void LoadParameters(std::string file_name) {
   fs["Kl"       ] >> Kl;
   fs["Dl"       ] >> Dl;
   fs["xil"      ] >> xil;
-  if (cam_model == "Stereo") {
+  if (cam_model == "stereo") {
     fs["Rl"       ] >> Rl;
     fs["Kr"       ] >> Kr;
     fs["Dr"       ] >> Dr;
@@ -94,7 +94,7 @@ void LoadParameters(std::string file_name) {
   cap_cols  = cap_size.width;
   cap_rows  = cap_size.height;
 
-  if (cam_model == "Stereo")
+  if (cam_model == "stereo")
     img_width  = cap_size.width / 2;
 }
 
@@ -172,7 +172,7 @@ void InitRectifyMap() {
             << "V.Fov: "  << vfov_now   << "\n";
   std::cout << "K Matrix: \n" << Knew << std::endl;
 
-  if (cam_model == "Stereo") {
+  if (cam_model == "stereo") {
     InitUndistortRectifyMap(Kr, Dr, xir, Rr, Knew, 
                             img_size, smap[1][0], smap[1][1]);
     std::cout << "Ndisp: " << ndisp_now << "\t"
@@ -248,7 +248,7 @@ int main(int argc, char** argv) {
                      &height_bar, height_max, OnTrackHeight);
 
   std::string disp_win_name  = "Disparity Image";
-  if (cam_model == "Stereo") {
+  if (cam_model == "stereo") {
     cv::namedWindow(disp_win_name);
     cv::createTrackbar("Num Disp:  16 + 16 *", disp_win_name,
                        &ndisp_bar,  ndisp_max,   OnTrackNdisp);
@@ -271,7 +271,7 @@ int main(int argc, char** argv) {
       exit(-1);
     }
 
-    if (cam_model == "Stereo") {
+    if (cam_model == "stereo") {
       raw_img(cv::Rect(        0, 0, img_width, cap_rows)).copyTo(raw_imgl);
       raw_img(cv::Rect(img_width, 0, img_width, cap_rows)).copyTo(raw_imgr);
 
@@ -287,7 +287,7 @@ int main(int argc, char** argv) {
     imshow(param_win_name, small_img);
     imshow("Rectified Image", rect_imgl);
 
-    if (cam_model == "Stereo") {
+    if (cam_model == "stereo") {
       cv::Mat disp_img;
       DisparityImage(rect_imgl, rect_imgr, disp_img);
       imshow(disp_win_name,  disp_img);
