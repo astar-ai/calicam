@@ -15,7 +15,7 @@ In TRIAL mode, the map cannot be saved to or loaded from the hard drive.
 
 	sudo apt-get install git cmake build-essential pkg-config libgtk2.0-dev libssl-dev libv4l-dev v4l-utils libjpeg-dev libtiff5-dev libjasper-dev libpng-dev libavcodec-dev libavformat-dev libswscale-dev libxvidcore-dev libx264-dev libxine2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libqt4-dev libgtk-3-dev mesa-utils libgl1-mesa-dri libqt4-opengl-dev libatlas-base-dev gfortran libeigen3-dev python2.7-dev python3-dev python-numpy python3-numpy 
 
-#### 1.2 Install OpenCV 3.4
+#### 1.2 Install OpenCV 3.0
 
 	cd
 	mkdir library
@@ -23,12 +23,12 @@ In TRIAL mode, the map cannot be saved to or loaded from the hard drive.
 
 	git clone https://github.com/opencv/opencv_contrib.git
 	cd opencv_contrib
-	git checkout tags/3.4.0
+	git checkout tags/3.0.0
 	cd ..
 
 	git clone https://github.com/opencv/opencv.git
 	cd opencv
-	git checkout tags/3.4.0
+	git checkout tags/3.0.0
 	mkdir build
 	cd build
 	cmake -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules ..
