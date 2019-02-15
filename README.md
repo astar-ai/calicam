@@ -3,7 +3,7 @@
 For more information see
 [https://astar.ai](https://astar.ai).
 
-[Youtube demo video](https://www.youtube.com/watch?v=pBh3_6uaY0s).
+Youtube [Demo Video](https://www.youtube.com/watch?v=pBh3_6uaY0s).
 
 The following steps have been tested and passed on Ubuntu **16.04.5**.
 
