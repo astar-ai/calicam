@@ -3,9 +3,7 @@
 For more information see
 [https://astar.ai](https://astar.ai).
 
-Click the image below to watch the Youtube demo video.
-
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/pBh3_6uaY0s/0.jpg)](https://www.youtube.com/watch?v=pBh3_6uaY0s)
+[Youtube demo video](https://www.youtube.com/watch?v=pBh3_6uaY0s).
 
 The following steps have been tested and passed on Ubuntu **16.04.5**.
 
