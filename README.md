@@ -53,7 +53,7 @@ In TRIAL mode, the map cannot be saved to or loaded from the hard drive.
 
 ### 4. Calibration Parameter File
 To run CaliCam in the **LIVE** mode, you need to download the calibration parameter file from online.
-Each CaliCam stereo/mono camera has a **UNIQUE** parameter file. Please download the corresponding parameter file by following the instructions at [https://astar.ai/collections/all](https://astar.ai/collections/all).
+Each CaliCam stereo/mono camera has a **UNIQUE** parameter file. Please download the corresponding parameter file by following the instructions at [https://astar.ai/collections/astar-products](https://astar.ai/collections/astar-products).
 
 ### 5. Operation
 
