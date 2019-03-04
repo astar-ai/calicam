@@ -7,7 +7,7 @@ Youtube [Demo Video](https://www.youtube.com/watch?v=pBh3_6uaY0s).
 
 The following steps have been tested and passed on Ubuntu **16.04.5**.
 
-### Note: A\*SLAM can run with ANY CaliCam stereo camera under the TRIAL mode.
+**Note: [A\*SLAM](https://github.com/astar-ai/aslam) can run with ANY CaliCam stereo camera under the TRIAL mode.**
 
 In TRIAL mode, the map cannot be saved to or loaded from the hard drive.
 
