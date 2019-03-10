@@ -22,7 +22,7 @@ int       ndisp_now = 32, wsize_now = 7;
 int       cap_cols, cap_rows, img_width;
 bool      changed = false;
 bool      is_sgbm = true;
-cv::Mat   Translation, Kl, Kr, Dl, Dr, xil, xir, Rl, Rr, smap[2][2];
+cv::Mat   Translation, Kl, Kr, Dl, Dr, xil, xir, Rl, Rr, smap[2][2], Knew;
 
 std::string cam_model;
 
@@ -157,10 +157,9 @@ void InitUndistortRectifyMap(cv::Mat K, cv::Mat D, cv::Mat xi, cv::Mat R,
 void InitRectifyMap() {
   double vfov_rad = vfov_now * CV_PI / 180.;
   double focal = height_now / 2. / tan(vfov_rad / 2.);
-  cv::Mat Knew =
-      (cv::Mat_<double>(3, 3) << focal, 0., width_now  / 2. - 0.5,
-                                 0., focal, height_now / 2. - 0.5,
-                                 0., 0., 1.);
+  Knew = (cv::Mat_<double>(3, 3) << focal, 0., width_now  / 2. - 0.5,
+                                    0., focal, height_now / 2. - 0.5,
+                                    0., 0., 1.);
 
   cv::Size img_size(width_now, height_now);
 
@@ -209,6 +208,31 @@ void DisparityImage(const cv::Mat& recl, const cv::Mat& recr, cv::Mat& disp) {
   double minVal, maxVal;
   minMaxLoc(disp16s, &minVal, &maxVal);
   disp16s.convertTo(disp, CV_8UC1, 255 / (maxVal - minVal));
+  
+  /* How to get the depth map
+  double fx = Knew.at<double>(0,0);
+  double fy = Knew.at<double>(1,1);
+  double cx = Knew.at<double>(0,2);
+  double cy = Knew.at<double>(1,2);
+  double bl = -Translation.at<double>(0,0);
+  
+  cv::Mat dispf;
+  disp16s.convertTo(dispf, CV_32F, 1.f / 16.f);
+  for (int r = 0; r < dispf.rows; ++r) {
+    for (int c = 0; c < dispf.cols; ++c) {
+      double e = (c - cx) / fx;
+      double f = (r - cy) / fy;
+
+      double disp  = dispf.at<float>(r,c);
+      if (disp <= 0.f)
+        continue;
+
+      double depth = fx * bl / disp;
+      double x = e * depth;
+      double y = f * depth;
+      double z = depth;
+    }
+  } */
 }
 
 ////////////////////////////////////////////////////////////////////////////////
