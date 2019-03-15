@@ -65,3 +65,13 @@ There are 2 trackbars to adjust the **numDisparities** and **blockSize** for [Op
 
 #### 5.3 Exit
 Press 'q' or 'Esc' key to exit.
+
+### 6. Live Mode
+To run CaliCam in a live mode, please change the variable live to true:
+
+	bool      live = true;
+
+and run
+
+	./calicam YOUR_CALIBRATION_FILE.yml
+
