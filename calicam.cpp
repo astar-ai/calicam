@@ -8,7 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 bool      live = false;
-//bool      live = true;
 //To run live mode, you need a CaliCam from www.astar.ai
 
 int       vfov_bar =  0, width_bar =   0, height_bar =   0;
