@@ -80,6 +80,7 @@ void LoadParameters(std::string file_name) {
   fs["Kl"       ] >> Kl;
   fs["Dl"       ] >> Dl;
   fs["xil"      ] >> xil;
+  Rl = cv::Mat::eye(3, 3, CV_64F);
   if (cam_model == "stereo") {
     fs["Rl"       ] >> Rl;
     fs["Kr"       ] >> Kr;
