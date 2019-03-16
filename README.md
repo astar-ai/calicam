@@ -1,4 +1,4 @@
-# CaliCam: Calibrated Camera
+# CaliCam: Calibrated Fisheye Camera (Stereo & Mono)
 
 For more information see
 [https://astar.ai](https://astar.ai).
