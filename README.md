@@ -7,9 +7,10 @@ Youtube [Demo Video](https://www.youtube.com/watch?v=pBh3_6uaY0s).
 
 The following steps have been tested and passed on Ubuntu **16.04.5**.
 
-**Note: [A\*SLAM](https://github.com/astar-ai/aslam) can run with ANY CaliCam stereo camera under the TRIAL mode.**
+### 0. Theoretical Background
 
-In TRIAL mode, the map cannot be saved to or loaded from the hard drive.
+Fisheye Camera Model:
+C. Mei and P. Rives, Single View Point Omnidirectional Camera Calibration From Planar Grids, ICRA 2007.
 
 ### 1. OpenCV Installation
 
@@ -75,3 +76,6 @@ and run
 
 	./calicam YOUR_CALIBRATION_FILE.yml
 
+**Note: [A\*SLAM](https://github.com/astar-ai/aslam) can run with ANY CaliCam stereo camera under the TRIAL mode.**
+
+In TRIAL mode, the map cannot be saved to or loaded from the hard drive.
