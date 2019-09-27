@@ -1,4 +1,4 @@
-# CaliCam: Calibrated Fisheye Camera (Stereo & Mono)
+# CaliCam: Calibrated Fisheye Stereo & Mono Camera
 
 <p align="center">
   <img src="http://astar.support/dotai/CaliCam_How_Stereo.jpg">
