@@ -83,3 +83,23 @@ and run
 **Note: [A\*SLAM](https://github.com/astar-ai/aslam) can run with ANY CaliCam stereo camera under the TRIAL mode.**
 
 In TRIAL mode, the map cannot be saved to or loaded from the hard drive.
+
+### 8. Reference: A Visualized Course of Linear Algebra
+
+**Inverse of Matrix**
+<p align="center">
+  <img src="http://astar.support/dotai/inv.gif">
+</p>
+
+**Eigenvector**
+<p align="center">
+  <img src="http://astar.support/dotai/eigen.gif">
+</p>
+
+**Singular Vector Decomposition**
+<p align="center">
+  <img src="http://astar.support/dotai/svd.gif">
+</p>
+
+For more information see
+[http://linear-algebra.org](http://linear-algebra.org).
