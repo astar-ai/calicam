@@ -102,4 +102,4 @@ In TRIAL mode, the map cannot be saved to or loaded from the hard drive.
 </p>
 
 For more information see
-[http://linear-algebra.org](http://linear-algebra.org).
+[http://linear-algebra.org](http://linear-algebra.org/en/index.html).
