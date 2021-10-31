@@ -58,6 +58,7 @@ and run
 
 In TRIAL mode, the map cannot be saved to or loaded from the hard drive.
 
+<!---
 ### 8. Reference: A Visualized Course of Linear Algebra
 
 **Inverse of Matrix**
@@ -77,3 +78,4 @@ In TRIAL mode, the map cannot be saved to or loaded from the hard drive.
 
 For more information see
 [http://linear-algebra.org](http://linear-algebra.org/en/index.html).
+--->
