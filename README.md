@@ -20,15 +20,17 @@ C. Mei and P. Rives, Single View Point Omnidirectional Camera Calibration From P
 
 Required at leat 3.0. Tested with OpenCV 3.4.0.
 
-### 3. Compile
-
+### 3. Run C++ Code
+#### Compile
 	mkdir build && cd build
 	cmake ..
 	make
-
-### 4. Run
-
+#### Run
 	./calicam
+
+### 4. Run Python Code
+
+	python calicam.py
 
 ### 5. Calibration Parameter File
 To run CaliCam in the **LIVE** mode, you need to download the calibration parameter file from online.
