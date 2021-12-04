@@ -56,11 +56,11 @@ and run
 
 	./calicam YOUR_CALIBRATION_FILE.yml
 
+<!---
 **Note: [A\*SLAM](https://github.com/astar-ai/aslam) can run with ANY CaliCam stereo camera under the TRIAL mode.**
 
 In TRIAL mode, the map cannot be saved to or loaded from the hard drive.
 
-<!---
 ### 8. Reference: A Visualized Course of Linear Algebra
 
 **Inverse of Matrix**
