@@ -1,5 +1,5 @@
 
-// This is NWNC (No Warranty No Copyright) Software.
+// This is No Warranty No Copyright Software.
 // astar.ai
 // Nov 16, 2018
 
@@ -100,6 +100,12 @@ void LoadParameters(std::string file_name) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+inline double MatRowMul(cv::Mat m, double x, double y, double z, int r) {
+  return m.at<double>(r,0) * x + m.at<double>(r,1) * y + m.at<double>(r,2) * z;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void InitUndistortRectifyMap(cv::Mat K, cv::Mat D, cv::Mat xi, cv::Mat R, 
                              cv::Mat P, cv::Size size, 
                              cv::Mat& map1, cv::Mat& map2) {
@@ -121,33 +127,30 @@ void InitUndistortRectifyMap(cv::Mat K, cv::Mat D, cv::Mat xi, cv::Mat R,
 
   cv::Mat KRi = (P * R).inv();
 
-  for (int i = 0; i < size.height; ++i) {
-    double x = i * KRi.at<double>(0,1) + KRi.at<double>(0,2);
-    double y = i * KRi.at<double>(1,1) + KRi.at<double>(1,2);
-    double w = i * KRi.at<double>(2,1) + KRi.at<double>(2,2);
-    for (int j = 0; j < size.width; ++j, x += KRi.at<double>(0,0),
-                                         y += KRi.at<double>(1,0),
-                                         w += KRi.at<double>(2,0)) {
-      double r  = sqrt(x * x + y * y + w * w);
-      double xs = x / r;
-      double ys = y / r;
-      double zs = w / r;
+  for (int r = 0; r < size.height; ++r) {
+    for (int c = 0; c < size.width; ++c) {
+      double xc = MatRowMul(KRi, c, r, 1., 0);
+      double yc = MatRowMul(KRi, c, r, 1., 1);
+      double zc = MatRowMul(KRi, c, r, 1., 2);    
+
+      double rr = sqrt(xc * xc + yc * yc + zc * zc);
+      double xs = xc / rr;
+      double ys = yc / rr;
+      double zs = zc / rr;
 
       double xu = xs / (zs + xid);
       double yu = ys / (zs + xid);
 
       double r2 = xu * xu + yu * yu;
       double r4 = r2 * r2;
-      double xd = (1 + k1 * r2 + k2 * r4) * xu + 2 * p1 * xu * yu
-                                               + p2 * (r2 + 2 * xu * xu);
-      double yd = (1 + k1 * r2 + k2 * r4) * yu + 2 * p2 * xu * yu
-                                               + p1 * (r2 + 2 * yu * yu);
-
+      double xd = (1+k1*r2+k2*r4)*xu + 2*p1*xu*yu + p2*(r2+2*xu*xu);
+      double yd = (1+k1*r2+k2*r4)*yu + 2*p2*xu*yu + p1*(r2+2*yu*yu);
+      
       double u = fx * xd + s * yd + cx;
       double v = fy * yd + cy;
 
-      map1.at<float>(i,j) = (float) u;
-      map2.at<float>(i,j) = (float) v;
+      map1.at<float>(r,c) = (float) u;
+      map2.at<float>(r,c) = (float) v;
     }
   }
 }
