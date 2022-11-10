@@ -48,7 +48,7 @@ There are 2 trackbars to adjust the **numDisparities** and **blockSize** for [Op
 Press 'q' or 'Esc' key to exit.
 
 ### 7. Live Mode
-To run CaliCam in a live mode, please change the variable live to true. Python code does **NOT** support the live mode.
+To run calicam.cpp in a live mode, please change the variable live to true. Python code does **NOT** support the live mode.
 
 	bool      live = true;
 
