@@ -27,14 +27,16 @@ std::string cam_model;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void OnTrackAngle(int, void*) {
+void OnTrackAngle(int value, void*) {
+  vfov_bar = value;
   vfov_now = 60 + vfov_bar;
   changed = true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void OnTrackWidth(int, void*) {
+void OnTrackWidth(int value, void*) {
+  width_bar = value;
   width_now = 480 + width_bar;
   if (width_now % 2 == 1)
     width_now--;
@@ -43,7 +45,8 @@ void OnTrackWidth(int, void*) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void OnTrackHeight(int, void*) {
+void OnTrackHeight(int value, void*) {
+  height_bar = value;
   height_now = 360 + height_bar;
   if (height_now % 2 == 1)
     height_now--;
@@ -52,14 +55,16 @@ void OnTrackHeight(int, void*) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void OnTrackNdisp(int, void*) {
+void OnTrackNdisp(int value, void*) {
+  ndisp_bar = value;
   ndisp_now = 16 + 16 * ndisp_bar;
   changed = true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void OnTrackWsize(int, void*) {
+void OnTrackWsize(int value, void*) {
+  wsize_bar = value;
   wsize_now = 3 + 2 * wsize_bar;
   changed = true;
 }
@@ -106,8 +111,8 @@ inline double MatRowMul(cv::Mat m, double x, double y, double z, int r) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void InitUndistortRectifyMap(cv::Mat K, cv::Mat D, cv::Mat xi, cv::Mat R, 
-                             cv::Mat P, cv::Size size, 
+void InitUndistortRectifyMap(cv::Mat K, cv::Mat D, cv::Mat xi, cv::Mat R,
+                             cv::Mat P, cv::Size size,
                              cv::Mat& map1, cv::Mat& map2) {
   map1 = cv::Mat(size, CV_32F);
   map2 = cv::Mat(size, CV_32F);
@@ -131,7 +136,7 @@ void InitUndistortRectifyMap(cv::Mat K, cv::Mat D, cv::Mat xi, cv::Mat R,
     for (int c = 0; c < size.width; ++c) {
       double xc = MatRowMul(KRi, c, r, 1., 0);
       double yc = MatRowMul(KRi, c, r, 1., 1);
-      double zc = MatRowMul(KRi, c, r, 1., 2);    
+      double zc = MatRowMul(KRi, c, r, 1., 2);
 
       double rr = sqrt(xc * xc + yc * yc + zc * zc);
       double xs = xc / rr;
@@ -145,7 +150,7 @@ void InitUndistortRectifyMap(cv::Mat K, cv::Mat D, cv::Mat xi, cv::Mat R,
       double r4 = r2 * r2;
       double xd = (1+k1*r2+k2*r4)*xu + 2*p1*xu*yu + p2*(r2+2*xu*xu);
       double yd = (1+k1*r2+k2*r4)*yu + 2*p2*xu*yu + p1*(r2+2*yu*yu);
-      
+
       double u = fx * xd + s * yd + cx;
       double v = fy * yd + cy;
 
@@ -166,7 +171,7 @@ void InitRectifyMap() {
 
   cv::Size img_size(width_now, height_now);
 
-  InitUndistortRectifyMap(Kl, Dl, xil, Rl, Knew, 
+  InitUndistortRectifyMap(Kl, Dl, xil, Rl, Knew,
                           img_size, smap[0][0], smap[0][1]);
 
   std::cout << "Width: "  << width_now  << "\t"
@@ -175,7 +180,7 @@ void InitRectifyMap() {
   std::cout << "K Matrix: \n" << Knew << std::endl;
 
   if (cam_model == "stereo") {
-    InitUndistortRectifyMap(Kr, Dr, xir, Rr, Knew, 
+    InitUndistortRectifyMap(Kr, Dr, xir, Rr, Knew,
                             img_size, smap[1][0], smap[1][1]);
     std::cout << "Ndisp: " << ndisp_now << "\t"
               << "Wsize: " << wsize_now << "\n";
@@ -194,8 +199,8 @@ void DisparityImage(const cv::Mat& recl, const cv::Mat& recr, cv::Mat& disp) {
     sgbm->compute(recl, recr, disp16s);
   } else {
     cv::Mat grayl, grayr;
-    cv::cvtColor(recl, grayl, CV_BGR2GRAY);
-    cv::cvtColor(recr, grayr, CV_BGR2GRAY);
+    cv::cvtColor(recl, grayl, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(recr, grayr, cv::COLOR_BGR2GRAY);
 
     cv::Ptr<cv::StereoBM> sbm = cv::StereoBM::create(N, W);
     sbm->setPreFilterCap(31);
@@ -211,14 +216,14 @@ void DisparityImage(const cv::Mat& recl, const cv::Mat& recr, cv::Mat& disp) {
   double minVal, maxVal;
   minMaxLoc(disp16s, &minVal, &maxVal);
   disp16s.convertTo(disp, CV_8UC1, 255 / (maxVal - minVal));
-  
+
   /* How to get the depth map
   double fx = Knew.at<double>(0,0);
   double fy = Knew.at<double>(1,1);
   double cx = Knew.at<double>(0,2);
   double cy = Knew.at<double>(1,2);
   double bl = -Translation.at<double>(0,0);
-  
+
   cv::Mat dispf;
   disp16s.convertTo(dispf, CV_32F, 1.f / 16.f);
   for (int r = 0; r < dispf.rows; ++r) {
@@ -255,9 +260,9 @@ int main(int argc, char** argv) {
       exit(-1);
     }
 
-    vcapture.set(CV_CAP_PROP_FRAME_WIDTH,  cap_cols);
-    vcapture.set(CV_CAP_PROP_FRAME_HEIGHT, cap_rows);
-    vcapture.set(CV_CAP_PROP_FPS, 30);
+    vcapture.set(cv::CAP_PROP_FRAME_WIDTH,  cap_cols);
+    vcapture.set(cv::CAP_PROP_FRAME_HEIGHT, cap_rows);
+    vcapture.set(cv::CAP_PROP_FPS, 30);
   } else {
     raw_img = cv::imread("../dasl_wood_shop.jpg", cv::IMREAD_COLOR);
   }
@@ -267,20 +272,17 @@ int main(int argc, char** argv) {
   std::string param_win_name(win_name);
   cv::namedWindow(param_win_name);
 
-  cv::createTrackbar("V. FoV:  60    +", param_win_name,
-                     &vfov_bar,   vfov_max,   OnTrackAngle);
-  cv::createTrackbar("Width:  480 +", param_win_name,
-                     &width_bar,  width_max,  OnTrackWidth);
-  cv::createTrackbar("Height: 360 +", param_win_name,
-                     &height_bar, height_max, OnTrackHeight);
+  cv::createTrackbar("V. FoV:  60    +", param_win_name, nullptr, vfov_max, OnTrackAngle);
+  cv::createTrackbar("Width:  480 +", param_win_name, nullptr, width_max, OnTrackWidth);
+  cv::createTrackbar("Height: 360 +", param_win_name, nullptr, height_max, OnTrackHeight);
 
   std::string disp_win_name  = "Disparity Image";
   if (cam_model == "stereo") {
     cv::namedWindow(disp_win_name);
-    cv::createTrackbar("Num Disp:  16 + 16 *", disp_win_name,
-                       &ndisp_bar,  ndisp_max,   OnTrackNdisp);
-    cv::createTrackbar("Blk   Size :     3  +  2 *", disp_win_name,
-                       &wsize_bar,  wsize_max,  OnTrackWsize);
+    cv::createTrackbar("Num Disp:  16 + 16 *", disp_win_name, nullptr, ndisp_max, OnTrackNdisp);
+    cv::setTrackbarPos("Num Disp:  16 + 16 *", disp_win_name, ndisp_bar);
+    cv::createTrackbar("Blk   Size :     3  +  2 *", disp_win_name, nullptr, wsize_max, OnTrackWsize);
+    cv::setTrackbarPos("Blk   Size :     3  +  2 *", disp_win_name, wsize_bar);
   }
 
   cv::Mat raw_imgl, raw_imgr, rect_imgl, rect_imgr;
@@ -329,6 +331,3 @@ int main(int argc, char** argv) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-
-
