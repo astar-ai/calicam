@@ -9,7 +9,7 @@ For more information see
 
 Youtube [Demo Video](https://www.youtube.com/watch?v=pBh3_6uaY0s).
 
-The following steps have been tested and passed on Ubuntu **16.04**.
+The following steps have been tested and passed on Ubuntu **22.04**.
 
 ### 1. Theoretical Background
 
@@ -18,7 +18,7 @@ C. Mei and P. Rives, Single View Point Omnidirectional Camera Calibration From P
 
 ### 2. OpenCV Dependencies
 
-Required at leat 3.0. Tested with OpenCV 3.4.0.
+Required at leat 4.0. Tested with OpenCV 4.5.5.
 
 ### 3. Run C++ Code
 #### Compile
